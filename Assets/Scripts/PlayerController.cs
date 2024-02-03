@@ -1,35 +1,69 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    Rigidbody2D rigidBody2D;
     Animator animator;
-
-    private void Start() {
+    float horizontal;
+    float vertical;
+    Vector3 position;
+    [SerializeField]float speed = 2f;
+    [SerializeField]float jump = 2f;
+    private void Start()
+    {
         animator = gameObject.GetComponent<Animator>();
+        rigidBody2D = gameObject.GetComponent<Rigidbody2D>();
     }
-    private void Update() {
-        // Get Horizontal
-        float speed = Input.GetAxisRaw("Horizontal");
-        bool crouch = false;
+    private void Update()
+    {
+        // Setup Variables
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Jump");
+        position = transform.position;
 
-        // Set Animator
-        animator.SetFloat("speed", Mathf.Abs(speed));
-        
+        // Set Animatioms and logic
+        Walk();
+        Crouch();
+        Jump();
+    }
 
-        // Turn Backwards
+    void Walk()
+    {
+        //Movement
+        position.x = position.x + horizontal * speed * Time.deltaTime;
+        transform.position = position;
+
+        //Turn Backwards
         Vector3 Backface = transform.localScale;
-        Backface.x = speed < 0 ? (-1 * Mathf.Abs(Backface.x)) : Mathf.Abs(Backface.x);
+        Backface.x = horizontal < 0 ? (-1 * Mathf.Abs(Backface.x)) : Mathf.Abs(Backface.x);
         transform.localScale = Backface;
 
-        // Crouch
-        if(Input.GetKey(KeyCode.LeftControl))
-            crouch = true;
-        else
-            crouch=false;
+        //Animate
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+    }
 
-        animator.SetBool("Crouched", crouch);
+    private void Jump()
+    {
+        //Jump
+        if(vertical > 0){
+            rigidBody2D.AddForce(new Vector2(0f, jump), ForceMode2D.Force);
+            animator.SetBool("Jump", true);
+        }
+        else
+            animator.SetBool("Jump", false);
+    }
+
+    void Crouch()
+    {
+        // Crouch
+        bool isCrouched = false;
+        if (Input.GetKey(KeyCode.LeftControl))
+            isCrouched = true;
+        else
+            isCrouched = false;
+
+        animator.SetBool("Crouched", isCrouched);
     }
 }
