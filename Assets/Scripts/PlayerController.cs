@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         transform.localScale = Backface;
 
         //Animate
-        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        animator.SetFloat("HorizontalSpeed", Mathf.Abs(horizontal));
     }
 
     private void Jump()
@@ -49,10 +49,10 @@ public class PlayerController : MonoBehaviour
         //Jump
         if(vertical > 0){
             rigidBody2D.AddForce(new Vector2(0f, jump), ForceMode2D.Force);
-            animator.SetBool("Jump", true);
+            // animator.SetBool("Jump", true);
         }
-        else
-            animator.SetBool("Jump", false);
+        // else
+        //     animator.SetBool("Jump", false);
     }
 
     void Crouch()
@@ -64,6 +64,6 @@ public class PlayerController : MonoBehaviour
         else
             isCrouched = false;
 
-        animator.SetBool("Crouched", isCrouched);
+        animator.SetBool("Crouching", isCrouched);
     }
 }
