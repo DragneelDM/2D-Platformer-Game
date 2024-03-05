@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -65,5 +66,9 @@ public class PlayerController : MonoBehaviour
             isCrouched = false;
 
         animator.SetBool("Crouching", isCrouched);
+    }
+    
+    public void ReloadScene(){
+        SceneManager.LoadScene(0);
     }
 }
