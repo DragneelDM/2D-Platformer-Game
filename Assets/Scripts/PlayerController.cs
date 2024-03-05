@@ -47,12 +47,12 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         //Jump
-        if(vertical > 0){
+        if(vertical > 0 && transform.position.y < 0){
             rigidBody2D.AddForce(new Vector2(0f, jump), ForceMode2D.Force);
-            // animator.SetBool("Jump", true);
+            animator.SetBool("Jump", true);
         }
-        // else
-        //     animator.SetBool("Jump", false);
+        else
+            animator.SetBool("Jump", false);
     }
 
     void Crouch()
