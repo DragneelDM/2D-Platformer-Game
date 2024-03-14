@@ -67,8 +67,8 @@ public class PlayerController : MonoBehaviour
 
         animator.SetBool("Crouching", isCrouched);
     }
-    
-    public void ReloadScene(){
-        SceneManager.LoadScene(0);
+
+    public void Death(){
+        SceneManager.LoadScene(2);
     }
 }
