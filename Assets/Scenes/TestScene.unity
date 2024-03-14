@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 281949767}
   - component: {fileID: 281949766}
   m_Layer: 0
-  m_Name: KeySpin0000
+  m_Name: KeySpin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
