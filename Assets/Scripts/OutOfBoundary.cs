@@ -8,7 +8,7 @@ public class OutOfBoundary : MonoBehaviour
             print("Try Again");
 
             SceneManager.LoadScene(
-                SceneManager.GetActiveScene( ).buildIndex
+                3
             );
         }
     }
