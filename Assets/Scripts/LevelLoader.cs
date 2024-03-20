@@ -19,9 +19,11 @@ public class LevelLoader : MonoBehaviour {
                 print("Thambi you are locked");
             break;
             case LevelStatus.Unlocked:
+                SoundManager.Instance.Play(Sounds.ButtonClick);
                 print("New Homework Unlocked");
             break;
             case LevelStatus.Completed:
+                SoundManager.Instance.Play(Sounds.ButtonClick);
                 print("Get Lost");
             break;
         }

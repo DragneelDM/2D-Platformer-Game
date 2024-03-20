@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public void reload(){
-        SceneManager.LoadScene("TestScene");
-    }
-
     public void Exit(){
         Application.Quit();
     }

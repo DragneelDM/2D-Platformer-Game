@@ -8,10 +8,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigidBody2D;
     Animator animator;
     float horizontal;
-    float vertical;
+    bool jumpInput;
     Vector3 position;
-    [SerializeField]float speed = 2f;
-    [SerializeField]float jump = 2f;
+    [SerializeField]float speed = 5f;
+    [SerializeField, Range(100,500)]float jump = 300f;
     private void Start()
     {
         animator = gameObject.GetComponent<Animator>();
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     {
         // Setup Variables
         horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Jump");
+        jumpInput = Input.GetButtonDown("Jump");
         position = transform.position;
 
         // Set Animatioms and logic
@@ -48,12 +48,11 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         //Jump
-        if(vertical > 0 && transform.position.y < 0){
+        bool condition = jumpInput && transform.position.y < 0;
+        animator.SetBool("Jump", condition);
+
+        if(condition)
             rigidBody2D.AddForce(new Vector2(0f, jump), ForceMode2D.Force);
-            animator.SetBool("Jump", true);
-        }
-        else
-            animator.SetBool("Jump", false);
     }
 
     void Crouch()
@@ -69,6 +68,6 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Death(){
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

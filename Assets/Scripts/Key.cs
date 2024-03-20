@@ -6,7 +6,7 @@ public class Key : MonoBehaviour
         if(other.gameObject.GetComponent<PlayerController>() != null){
 
             // Direct reference to Score because i am lazy
-            FindObjectOfType<ScoreText>().IncreaseScore(1);
+            FindObjectOfType<ScoreText>()?.IncreaseScore(1);
             Destroy(gameObject);
         }
     }
