@@ -6,6 +6,7 @@ public class Chomper : MonoBehaviour
 {
     [SerializeField] Vector3 startPatrol;
     [SerializeField] Vector3 endPatrol;
+    [SerializeField] GameObject burstVfX;
 
     [SerializeField] AnimationCurve speed;
     float current = 0f; // Start at 0 to move from startPatrol to endPatrol
@@ -30,5 +31,11 @@ public class Chomper : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         other.gameObject.GetComponent<PlayerController>()?.Death();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 200f));
+        Instantiate(burstVfX, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }

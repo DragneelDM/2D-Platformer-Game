@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    static SoundManager instance;
+    private static SoundManager instance;
     public static SoundManager Instance { get { return instance;}}
     // Start is called before the first frame update
 
@@ -51,7 +51,9 @@ public class SoundManager : MonoBehaviour
         Music,
         ButtonClick,
         PlayerMove,
-        PlayeDeath,
+        PlayerFootstep,
+        PlayerDeath,
+        ChomperDeath,
         GunnerFootstep,
         SwitchActivated,
         EnemyDeath

@@ -97,7 +97,7 @@ MonoBehaviour:
   projectile: {fileID: 1223526616464650, guid: eeb24d23898f45f46a7caedb2d093291, type: 3}
   ShootingPoint: {fileID: 7620787573352431907}
   patrolPoints:
-  - {x: -3.5, y: -33.96, z: 0}
+  - {x: -2.55, y: -33.96, z: 0}
   - {x: 12, y: -33.96, z: 0}
   lerpTime: 10
 --- !u!95 &7620787573287320165

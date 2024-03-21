@@ -519,6 +519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8617dc0d922e6e54489406d94df90c4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
+  ShootingPoint: {fileID: 0}
   patrolPoints:
   - {x: 13, y: -1.8, z: 0}
   - {x: 19, y: -1.8, z: 0}
@@ -590,7 +592,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1401581401
-  m_SortingLayer: 2
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 7.5, y: 5.15625, z: 0}
@@ -813,6 +815,7 @@ GameObject:
   - component: {fileID: 1074236224}
   - component: {fileID: 1074236223}
   - component: {fileID: 1074236226}
+  - component: {fileID: 1074236227}
   m_Layer: 0
   m_Name: Chomper
   m_TagString: Untagged
@@ -946,6 +949,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1074236227
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074236222}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b2aa8b30c7c918a4ca6fd24db18a570d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1091176465
 GameObject:
   m_ObjectHideFlags: 0

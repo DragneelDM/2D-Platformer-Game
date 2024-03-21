@@ -830,7 +830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49367c89d4ad07442a66b68d90734ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1518676747}
   SceneIndex: 2
 --- !u!1 &1347368581
 GameObject:
@@ -926,6 +925,8 @@ GameObject:
   - component: {fileID: 1518676749}
   - component: {fileID: 1518676748}
   - component: {fileID: 1518676747}
+  - component: {fileID: 1518676750}
+  - component: {fileID: 1518676751}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -992,7 +993,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1518676748}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1518676751}
+        m_MethodName: DeleteUIManager
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &1518676748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,3 +1040,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1518676745}
   m_CullTransparentMesh: 0
+--- !u!114 &1518676750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518676745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49367c89d4ad07442a66b68d90734ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneIndex: 0
+--- !u!114 &1518676751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518676745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e18e0e74e79e3543a352391db003648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  garbages: []

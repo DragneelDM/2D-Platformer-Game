@@ -305,10 +305,14 @@ MonoBehaviour:
   Sounds:
   - soundType: 0
     soundClip: {fileID: 8300000, guid: 0651b56880a11ef45909b779443691aa, type: 3}
-  - soundType: 4
-    soundClip: {fileID: 8300000, guid: 1405fff70e6be504f82af6f73e33ad24, type: 3}
   - soundType: 5
+    soundClip: {fileID: 8300000, guid: 1405fff70e6be504f82af6f73e33ad24, type: 3}
+  - soundType: 6
     soundClip: {fileID: 8300000, guid: 335c62a6fbfebf84d821d960b0c5abaa, type: 3}
+  - soundType: 4
+    soundClip: {fileID: 8300000, guid: bc38393f25859f343b586930017a1690, type: 3}
+  - soundType: 3
+    soundClip: {fileID: 8300000, guid: 13de3c8b19190eb488622c2982f7e977, type: 3}
 --- !u!82 &7113214007715673642
 AudioSource:
   m_ObjectHideFlags: 0
