@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fader : MonoBehaviour
 {
-    public Image image;
+    Image image;
     [SerializeField] AnimationCurve speedCurve;
     [SerializeField] float duration = 1f;
 

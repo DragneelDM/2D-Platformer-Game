@@ -48,6 +48,7 @@ public class Gunner : MonoBehaviour
 
     void SetPatrol(){
         patrol = true;
+        FindObjectOfType<BossUI>().CallGuys();
     }
 
     void Projectile(){

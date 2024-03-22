@@ -5,11 +5,16 @@ public class Pulse : MonoBehaviour
     [SerializeField] GameObject Explosion;
     void Update()
     {
-        transform.Translate(Vector2.right * 0.4f);
+        transform.parent.Translate(Vector2.right * 0.1f);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Instantiate(Explosion, transform.GetChild(0).position, transform.rotation);
-        Destroy(gameObject);
+        if(other.tag == "Respawn"){
+            FindObjectOfType<BossUI>().UpdateUI();
+            print("Get it down");
+        }
+
+        Instantiate(Explosion, transform.position, transform.rotation);
+        Destroy(transform.parent.gameObject);
     }
 }
