@@ -662,7 +662,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Lol \nJust\nDie"
+  m_text: 'Just
+
+    Jump.
+
+    Lol'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -731,9 +735,9 @@ MonoBehaviour:
   m_margin: {x: 76.362175, y: 0, z: 75.75135, w: 0}
   m_textInfo:
     textComponent: {fileID: 195978623}
-    characterCount: 13
+    characterCount: 14
     spriteCount: 0
-    spaceCount: 3
+    spaceCount: 2
     wordCount: 3
     linkCount: 0
     lineCount: 3

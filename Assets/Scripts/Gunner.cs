@@ -51,7 +51,7 @@ public class Gunner : MonoBehaviour
     }
 
     void Projectile(){
-        Instantiate(projectile, ShootingPoint.position, ShootingPoint.rotation);
+        FindObjectOfType<BossAttack>().Shoot();
     }
 
     void FootStep(){
