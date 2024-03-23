@@ -450,6 +450,8 @@ MonoBehaviour:
   projectile: {fileID: 4328121840745207788, guid: e05fd4353161b874eb8f3b3033d679b2,
     type: 3}
   autoShoot: 1
+  durationTime: 3
+  elaspedTime: 0
 --- !u!61 &65754742
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2586,6 +2588,11 @@ PrefabInstance:
     - target: {fileID: 4102119228880669468, guid: 84b0c14f8ad5be9478635685fe0f0882,
         type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4102119228880669468, guid: 84b0c14f8ad5be9478635685fe0f0882,
+        type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8011,6 +8018,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049197371135475826, guid: 92a5765f84a828d4a84b2d82c687a053,
+        type: 3}
+      propertyPath: NextScene
+      value: Level4
       objectReference: {fileID: 0}
     - target: {fileID: 6049197371135475827, guid: 92a5765f84a828d4a84b2d82c687a053,
         type: 3}

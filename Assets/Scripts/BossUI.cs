@@ -31,5 +31,8 @@ public class BossUI : MonoBehaviour
 
     public void UpdateUI(){
         bossDamage++;
+        if(bossDamage > 2f){
+            FindObjectOfType<Gunner>().gameObject.GetComponent<Animator>().SetBool("Died", true);
+        }
     }
 }

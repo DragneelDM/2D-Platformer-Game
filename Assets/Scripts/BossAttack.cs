@@ -17,11 +17,13 @@ public class BossAttack : MonoBehaviour
 
     private void Update(){
         if(autoShoot){
-            elaspedTime += Time.deltaTime;
+            if(player.position.x < 32){
+                elaspedTime += Time.deltaTime;
 
-            if(elaspedTime > durationTime){
-                Instantiate(projectile, new Vector2(player.position.x, transform.position.y), transform.rotation);
-                elaspedTime = 0f;
+                if(elaspedTime > durationTime){
+                    Instantiate(projectile, new Vector2(player.position.x, transform.position.y), transform.rotation);
+                    elaspedTime = 0f;
+                }
             }
         }
     }

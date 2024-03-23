@@ -197,7 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4174c2e5aaac4c74f84fcf9503bb1f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
   speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -1254,7 +1253,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 32ac8d2672bc1aa4b8caa5539b9a33e5, type: 2}
+  m_Texture: {fileID: 2800000, guid: 4bf2351722c646f488a25713e9202e9d, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

@@ -21,6 +21,8 @@ public class SoundManager : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
+
+        soundEffect.PlayOneShot(getSoundClip(global::Sounds.Music));
     }
 
     public void Play(Sounds sound){
