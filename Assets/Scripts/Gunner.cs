@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,6 @@ public class Gunner : MonoBehaviour
     [SerializeField] GameObject projectile;
     [SerializeField] Transform ShootingPoint;
     [SerializeField] Vector3[] patrolPoints;
-    float health = 3f;
     float elapsedTime;
     Animator anims;
     [SerializeField] float lerpTime = 5f;
@@ -23,6 +23,19 @@ public class Gunner : MonoBehaviour
     void Update()
     {
         Patrol();
+        AttackTimer();
+    }
+
+    private void AttackTimer()
+    {
+        float extraElapsedTime = 0;
+        extraElapsedTime += Time.deltaTime;
+
+        if( extraElapsedTime > 5f){
+            extraElapsedTime = 0f;
+        }
+
+        anims.SetFloat("ElapsedTime", extraElapsedTime);
     }
 
     void Patrol(){
