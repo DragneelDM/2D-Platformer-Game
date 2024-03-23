@@ -1,16 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Gunner : MonoBehaviour
 {
+    [SerializeField] GameObject projectile;
+    [SerializeField] Transform ShootingPoint;
     [SerializeField] Vector3[] patrolPoints;
+    float health = 3f;
     float elapsedTime;
+    Animator anims;
     [SerializeField] float lerpTime = 5f;
     bool facingLeft = true;
+    bool patrol = false;
+
+
+    private void Start() {
+        anims = GetComponent<Animator>();
+    }
 
     void Update()
     {
+        Patrol();
+    }
+
+    void Patrol(){
+        if(!patrol) { return; }
         elapsedTime += Time.deltaTime;
 
         if (elapsedTime < lerpTime)
@@ -36,5 +52,23 @@ public class Gunner : MonoBehaviour
         patrolPoints[0] = patrolPoints[1];
         patrolPoints[1] = temp;
 
+    }
+
+    void SetPatrol(){
+        patrol = true;
+        FindObjectOfType<BossUI>().CallGuys();
+    }
+
+    void Projectile(){
+        FindObjectOfType<BossAttack>().Shoot();
+    }
+
+    void FootStep(){
+        SoundManager.Instance.Play(Sounds.GunnerFootstep);
+    }
+
+    void Death(){
+        Destroy(gameObject);
+        SceneManager.LoadScene("Win");
     }
 }

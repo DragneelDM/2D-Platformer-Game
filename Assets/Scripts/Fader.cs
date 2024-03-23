@@ -16,22 +16,25 @@ public class Fader : MonoBehaviour
 
     async void FadeAsync()
     {
-        float elapsedTime = 0f;
-        // Get the Damn Timing
-        while (elapsedTime < duration)
+        if (image != null)
         {
-            // Calculate 0 to 1
-            float normalizedTime = elapsedTime / duration;
-            // Associate The Value to the Curve
-            float alpha = speedCurve.Evaluate(normalizedTime);
+            float elapsedTime = 0f;
+            // Get the Damn Timing
+            while (elapsedTime < duration)
+            {
+                // Calculate 0 to 1
+                float normalizedTime = elapsedTime / duration;
+                // Associate The Value to the Curve
+                float alpha = speedCurve.Evaluate(normalizedTime);
 
-            // Assign Color
-            image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+                // Assign Color
+                image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
 
-            // Increase Time
-            elapsedTime += Time.deltaTime;
-            // Allows other tasks to run in between frames
-            await Task.Yield();
+                // Increase Time
+                elapsedTime += Time.deltaTime;
+                // Allows other tasks to run in between frames
+                await Task.Yield();
+            }
         }
     }
 }
