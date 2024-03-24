@@ -1,87 +1,93 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class Gunner : MonoBehaviour
 {
-    [SerializeField] GameObject projectile;
-    [SerializeField] Transform ShootingPoint;
-    [SerializeField] Vector3[] patrolPoints;
-    float elapsedTime;
-    Animator anims;
-    [SerializeField] float lerpTime = 5f;
-    bool facingLeft = true;
-    bool patrol = false;
+    [SerializeField] public BossAttackManager BossAttackManager;
+    [SerializeField] private Vector3[] _patrolPoints;
+    [SerializeField] private Animator _anims;
+    [SerializeField] private float _attackDuration = 3f;
+    [SerializeField] private float _patrolDuration = 5f;
+    private float _elapsedTime;
+    private bool _facingLeft = true;
+    private bool _patrol = false;
+    private float _health = 3f;
 
-
-    private void Start() {
-        anims = GetComponent<Animator>();
+    private void Awake()
+    {
+        GameManager.Instance.SetBoss(this);
+        DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
+    private void Update()
     {
         Patrol();
-        AttackTimer();
     }
 
-    private void AttackTimer()
+    private void Patrol()
     {
-        float extraElapsedTime = 0;
-        extraElapsedTime += Time.deltaTime;
+        if (!_patrol) { return; }
 
-        if( extraElapsedTime > 5f){
-            extraElapsedTime = 0f;
+        if (_health == 0f)
+        {
+            _anims.SetBool(StringConsts.Died, true);
         }
 
-        anims.SetFloat("ElapsedTime", extraElapsedTime);
-    }
+        _elapsedTime += Time.deltaTime;
 
-    void Patrol(){
-        if(!patrol) { return; }
-        elapsedTime += Time.deltaTime;
+        _anims.SetFloat(StringConsts.ElapsedTime, _elapsedTime);
 
-        if (elapsedTime < lerpTime)
+        if (_elapsedTime < _patrolDuration)
         {
-            float t = elapsedTime / lerpTime;
-            transform.position = Vector3.Lerp(patrolPoints[0], patrolPoints[1], t);
+            // Attack In Middle of Patrol
+            if (_elapsedTime < _attackDuration)
+            {
+                _anims.SetBool(StringConsts.Attack, true);
+            }
+
+            float t = _elapsedTime / _patrolDuration;
+            transform.position = Vector3.Lerp(_patrolPoints[0], _patrolPoints[1], t);
         }
         else
         {
-            // Reset the timer when reaching the destination
-            elapsedTime = 0f;
+            _anims.SetBool(StringConsts.Attack, false);
+            _elapsedTime = 0f;
             SwapPoints();
         }
     }
 
-    void SwapPoints()
+    private void SwapPoints()
     {
-        Vector3 temp = patrolPoints[0];
+        Vector3 temp = _patrolPoints[0];
 
-        transform.localScale = facingLeft == true ? new Vector3(1,1,1) : new Vector3(-1,1,1);
-        facingLeft = !facingLeft;
+        transform.localScale = _facingLeft == true ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
+        _facingLeft = !_facingLeft;
 
-        patrolPoints[0] = patrolPoints[1];
-        patrolPoints[1] = temp;
+        _patrolPoints[0] = _patrolPoints[1];
+        _patrolPoints[1] = temp;
 
     }
 
-    void SetPatrol(){
-        patrol = true;
-        FindObjectOfType<BossUI>().CallGuys();
+    #region  Animation Events
+    private void SetPatrol()
+    {
+        _patrol = true;
+        GameManager.Instance.BossUi.Enable();
     }
 
-    void Projectile(){
-        FindObjectOfType<BossAttack>().Shoot();
+    private void Projectile()
+    {
+        BossAttackManager.Shoot();
     }
 
-    void FootStep(){
+    private void FootStep()
+    {
         SoundManager.Instance.Play(Sounds.GunnerFootstep);
     }
 
-    void Death(){
+    private void Death()
+    {
         Destroy(gameObject);
-        SceneManager.LoadScene("Win");
+        GameManager.Instance.Won();
     }
+    #endregion
 }

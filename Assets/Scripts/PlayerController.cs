@@ -6,108 +6,104 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    SpriteRenderer spriteRenderer;
-    Rigidbody2D rigidBody2D;
-    Animator animator;
-    float horizontal;
-    bool jumpInput;
-    bool maxHeightCondition = true;
-    bool jumpCondition;
-    bool isGrounded = false;
-    Vector3 position;
-    [HideInInspector] public int Health { get; private set;} = 3;
-    [SerializeField] float speed = 5f;
-    [SerializeField, Range(100,500)]float jump = 300f;
-    [SerializeField] bool setMaxHeight = true;
-    [SerializeField] float maxHeight = 0f;
-    void Start()
+    [SerializeField] SpriteRenderer _spriteRenderer;
+    [SerializeField] Rigidbody2D _rigidBody2D;
+    [SerializeField] Animator _animator;
+    private float _horizontal;
+    private bool _jumpInput;
+    private bool _maxHeightCondition = true;
+    private bool _jumpCondition;
+    private bool _isGrounded = false;
+    private Vector3 _position;
+    [SerializeField] float _speed = 5f;
+    [SerializeField, Range(100, 500)] float _jump = 300f;
+    [SerializeField] bool _setMaxHeight = true;
+    [SerializeField] float _maxHeight = 0f;
+
+    private void Start()
     {
-        animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidBody2D = GetComponent<Rigidbody2D>();
-        FindObjectOfType<UIManager>().gameObject?.SetActive(true);
+        GameManager.Instance?.gameObject.SetActive(true);
+        GameManager.Instance.InitKeys();
     }
-    void Update()
+    private void Update()
     {
-        // Setup Variables
-        horizontal = Input.GetAxisRaw("Horizontal");
-        jumpInput = Input.GetButtonDown("Jump");
-        position = transform.position;
+        _horizontal = Input.GetAxisRaw(StringConsts.Horizontal);
+        _jumpInput = Input.GetButtonDown(StringConsts.Jump);
+        _position = transform.position;
 
         // Max height condition Logic
-        maxHeightCondition = setMaxHeight && transform.position.y < maxHeight;
+        _maxHeightCondition = _setMaxHeight && transform.position.y < _maxHeight;
 
-        // Set Animatioms and logic
         Walk();
         Crouch();
-        if(isGrounded) { Jump(); }
+        if (_isGrounded) { Jump(); }
         Reset();
     }
 
-    void Walk()
+    private void Walk()
     {
-        //Movement
-        position.x += horizontal * speed * Time.deltaTime;
-        transform.position = position;
+        _position.x += _horizontal * _speed * Time.deltaTime;
+        transform.position = _position;
 
-        //Turn Backwards
-        if(horizontal != 0)
-            spriteRenderer.flipX = horizontal < 0;
+        if (_horizontal != 0)
+        {
+            _spriteRenderer.flipX = _horizontal < 0;
+        }
 
-        //Animate
-        animator.SetFloat("HorizontalSpeed", Mathf.Abs(horizontal));
+        _animator.SetFloat(StringConsts.HorizontalSpeed, Mathf.Abs(_horizontal));
     }
 
-    void Jump()
+    private void Jump()
     {
-        //Making it even more complicated but it's all boolean calculation so it is fine
-        //Baseline assumption that boolean are good for performance
-        // jumpCondition = maxHeightCondition ? jumpInput && maxHeightCondition : jumpInput;
-            // But this did not work, Don't Know why
+        _jumpCondition = _maxHeightCondition ? _jumpInput && _maxHeightCondition : _jumpInput;
 
-        jumpCondition = jumpInput && maxHeightCondition;
+        // jumpCondition = jumpInput && maxHeightCondition;
 
-        animator.SetBool("Jump", jumpCondition);
+        _animator.SetBool(StringConsts.Jump, _jumpCondition);
 
-        if(jumpCondition){
-            rigidBody2D.AddForce(new Vector2(0f, jump), ForceMode2D.Force); }
+        if (_jumpCondition)
+        {
+            _rigidBody2D.AddForce(new Vector2(0f, _jump), ForceMode2D.Force);
+        }
     }
 
-    void Crouch()
+    private void Crouch()
     {
-        // Crouch
         bool isCrouched = false;
         if (Input.GetKey(KeyCode.S))
             isCrouched = true;
         else
             isCrouched = false;
 
-        animator.SetBool("Crouching", isCrouched);
+        _animator.SetBool(StringConsts.Crouching, isCrouched);
     }
 
-    void Reset()
+    private void Reset()
     {
-        if(Input.GetKeyDown(KeyCode.Z)){
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            LevelManager.Instance.Restart();
         }
     }
 
-    // isGrounded Logic
-    void OnTriggerEnter2D(Collider2D other) {
-        isGrounded = true;
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        _isGrounded = true;
     }
 
-void OnTriggerExit2D(Collider2D other) {
-        isGrounded = false;
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        _isGrounded = false;
     }
 
-    public void Death(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    public void Death()
+    {
         SoundManager.Instance?.Play(Sounds.PlayerDeath);
-        UIManager.Instance?.ReduceHealth();
+        GameManager.Instance?.ReduceHealth();
     }
 
-    public void Footstep(){
+    public void Footstep()
+    {
         SoundManager.Instance.Play(Sounds.PlayerFootstep);
     }
 }

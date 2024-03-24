@@ -1,34 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BossAttack : MonoBehaviour
+public class BossAttackManager : MonoBehaviour
 {
-    [SerializeField] GameObject projectile;
-    [SerializeField] bool autoShoot = false;
-    [SerializeField] float durationTime = 3f;
-    [SerializeField] float elaspedTime = 0f;
-    Transform player;
+    [SerializeField] private GameObject _projectile;
+    [SerializeField] private bool _autoShoot = false;
+    [SerializeField] private float _durationTime = 3f;
+    [SerializeField] private float _elaspedTime = 0f;
+    [SerializeField] private float _maxRange = 32f;
+    private Transform _player;
 
-    private void Start() {
-        player = FindObjectOfType<PlayerController>(). transform;
+    private void Start()
+    {
+        _player = GameManager.Instance.PlayerController.transform;
     }
 
 
-    private void Update(){
-        if(autoShoot){
-            if(player.position.x < 32){
-                elaspedTime += Time.deltaTime;
+    private void Update()
+    {
+        if (_autoShoot)
+        {
+            if (_player.position.x < _maxRange)
+            {
+                _elaspedTime += Time.deltaTime;
 
-                if(elaspedTime > durationTime){
-                    Instantiate(projectile, new Vector2(player.position.x, transform.position.y), transform.rotation);
-                    elaspedTime = 0f;
+                if (_elaspedTime > _durationTime)
+                {
+                    Instantiate(_projectile, new Vector2(_player.position.x, transform.position.y), transform.rotation);
+                    _elaspedTime = 0f;
                 }
             }
         }
     }
 
-    public void Shoot(){
-        Instantiate(projectile, new Vector2(player.position.x, transform.position.y), transform.rotation);
+    public void Shoot()
+    {
+        Instantiate(_projectile, new Vector2(_player.position.x, transform.position.y), transform.rotation);
     }
 }

@@ -4,38 +4,51 @@ using UnityEngine;
 
 public class Chomper : MonoBehaviour
 {
-    [SerializeField] Vector3 startPatrol;
-    [SerializeField] Vector3 endPatrol;
-    [SerializeField] GameObject burstVfX;
+    [SerializeField] private Vector3 _startPatrol;
+    [SerializeField] private Vector3 _endPatrol;
+    [SerializeField] private GameObject _burstVfX;
 
-    [SerializeField] AnimationCurve speed;
-    float current = 0f; // Start at 0 to move from startPatrol to endPatrol
-    bool movingForward = true; // Flag to track the movement direction
+    [SerializeField] private AnimationCurve _speed;
+    private float _jumpForce = 200f;
+    private float _current = 0f; // Current progress along the path
+    private bool _movingForward = true; // Flag to track the movement direction
 
     private void Update()
     {
         // If chomper reaches either startPatrol or endPatrol, change direction
-        if (current >= 1f || current <= 0f)
+        if (_current >= 1f || _current <= 0f)
         {
-            movingForward = !movingForward;
+            _movingForward = !_movingForward; // Toggle movement direction
+            // Flip the sprite
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
 
+        // Determine the target position based on movement direction
+        float target = _movingForward ? 1f : 0f;
 
-        float target = movingForward ? 1f : 0f;
-
-        current = Mathf.MoveTowards(current, target, 0.5f * Time.deltaTime);
-        transform.position = Vector3.Lerp(startPatrol, endPatrol, speed.Evaluate(current));
+        // Move chomper smoothly towards the target position
+        _current = Mathf.MoveTowards(_current, target, 0.5f * Time.deltaTime);
+        // Update chomper's position along the patrol path
+        transform.position = Vector3.Lerp(_startPatrol, _endPatrol, _speed.Evaluate(_current));
     }
 
+
+    // For the Main Collider
     private void OnCollisionEnter2D(Collision2D other)
     {
         other.gameObject.GetComponent<PlayerController>()?.Death();
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 200f));
-        Instantiate(burstVfX, transform.position, transform.rotation);
+    // For the Second Collider on top
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidBody))
+        {
+            rigidBody.AddForce(new Vector2(0, _jumpForce));
+        }
+
+        Instantiate(_burstVfX, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

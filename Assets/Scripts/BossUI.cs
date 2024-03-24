@@ -1,38 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BossUI : MonoBehaviour
 {
-    GameObject child1;
-    GameObject child2;
-    Animator animator;
+    [SerializeField] private GameObject _healthFill;
+    [SerializeField] private GameObject _layout;
+    [SerializeField] private Animator _animator;
+    private Animator _bossAnim;
 
-    int bossDamage;
-    void Start()
+    private int _bossHealth = 0;
+    private void Start()
     {
-        child1 = transform.GetChild(0).gameObject;
-        child2 = transform.GetChild(1).gameObject;
-        child1.SetActive(false);
-        child2.SetActive(false);
-        animator = child1.GetComponent<Animator>();
+        _healthFill.SetActive(false);
+        _layout.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        animator.SetInteger("GetRekt", bossDamage);
+        _animator.SetInteger(StringConsts.BossHealth, _bossHealth);
     }
 
-    public void CallGuys(){
-        child1.SetActive(true);
-        child2.SetActive(true);
+    public void Enable()
+    {
+        _healthFill.SetActive(true);
+        _layout.SetActive(true);
     }
 
-    public void UpdateUI(){
-        bossDamage++;
-        if(bossDamage > 2f){
-            FindObjectOfType<Gunner>().gameObject.GetComponent<Animator>().SetBool("Died", true);
+    public void SetBoss(Animator anim)
+    {
+        _bossAnim = anim;
+    }
+
+    public void UpdateUI()
+    {
+        _bossHealth++;
+        if (_bossHealth == 3f)
+        {
+            _bossAnim.SetBool(StringConsts.Died, true);
         }
     }
+
 }

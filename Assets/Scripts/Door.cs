@@ -1,22 +1,19 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] string NextScene;
-    BoxCollider2D myCollider;
+    [SerializeField] private Levels _currentLevel;
+    [SerializeField] private Levels _nextScene;
 
-    private void Start() {
-        myCollider = GetComponent<BoxCollider2D>();
-    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (GameManager.Instance.DoorLocked)
+        {
+            LevelManager.Instance.SetLevelStatus(_currentLevel.ToString(), LevelStatus.Completed);
+            LevelManager.Instance.SetLevelStatus(_nextScene.ToString(), LevelStatus.Unlocked);
+            GameManager.Instance.ResetUI();
+            LevelManager.Instance.ChangeScene(_nextScene.ToString());
+        }
 
-    public void OpenSesame() {
-        myCollider.enabled = true;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) {
-        LevelManager.Instance.SetLevelStatus(SceneManager.GetActiveScene().name, LevelStatus.Completed);
-        LevelManager.Instance.SetLevelStatus(NextScene, LevelStatus.Unlocked);
-        SceneManager.LoadScene(NextScene);
     }
 }

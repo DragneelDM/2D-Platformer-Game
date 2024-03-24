@@ -1,26 +1,67 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    static LevelManager instance;
-    public static LevelManager Instance { get { return instance; }}
-
-    private void Awake() {
-        if(instance == null){
+    private static LevelManager instance;
+    public static LevelManager Instance { get { return instance; } }
+    [SerializeField] private PlayerData[] playerPrefabs;
+    private void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
             DontDestroyOnLoad(instance);
-        } else {
+        }
+        else
+        {
             Destroy(gameObject);
         }
     }
 
-    public LevelStatus GetLevelStatus(string level){
-        return (LevelStatus) PlayerPrefs.GetInt(level, 0);
+    public LevelStatus GetLevelStatus(string level)
+    {
+        return (LevelStatus)PlayerPrefs.GetInt(level, 0);
     }
 
-    public void SetLevelStatus(string level, LevelStatus levelStatus){
+    public void SetLevelStatus(string level, LevelStatus levelStatus)
+    {
         PlayerPrefs.SetInt(level, (int)levelStatus);
     }
+
+    public GameObject getPlayerPrefab(int level)
+    {
+        PlayerData player = Array.Find(playerPrefabs, value => (int)value.level == level);
+        return player?.player;
+    }
+
+    public void ChangeScene(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+}
+
+[Serializable]
+public class PlayerData
+{
+    public GameObject player;
+    public Levels level;
+}
+
+public enum Levels
+{
+    Lobby,
+    LevelSelector,
+    Level1,
+    Level2,
+    Level3,
+    Level4,
+    End,
+    Win
 }

@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class GunnerDoor : MonoBehaviour
 {
-    [SerializeField] GameObject Gunner;
-    [SerializeField] Transform Spawnpoint;
+    [SerializeField] private GameObject _gunner;
+    [SerializeField] private GameObject _bossAttackManager;
+    [SerializeField] private Transform _spawnpoint;
 
-    void Intro(){
-        Instantiate(Gunner, Spawnpoint.position, Spawnpoint.rotation);
+    // Animation Event
+    private void Intro()
+    {
+        GameObject boss = Instantiate(_gunner, _spawnpoint.position, _spawnpoint.rotation);
+        GameObject attackManager = Instantiate(_bossAttackManager);
+        boss.GetComponent<Gunner>().BossAttackManager = attackManager.GetComponent<BossAttackManager>();
+
     }
 }

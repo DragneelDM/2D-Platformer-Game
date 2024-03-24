@@ -2,21 +2,18 @@
 
 public class Key : MonoBehaviour
 {
+    [SerializeField] Animator _animator;
+    private void Start()
+    {
+        GameManager.Instance.SetKey();
+    }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.GetComponent<PlayerController>() != null){
-
-            // Direct reference to Score because i am lazy
-            FindObjectOfType<ScoreText>()?.IncreaseScore(1);
-
-            // Update Guides
-            EnableDirection[] Guides = FindObjectsOfType<EnableDirection>();
-            foreach(EnableDirection guide in Guides){
-                guide.KeyTaken();
-            }
-
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.GetComponent<PlayerController>() != null)
+        {
             // Update UI
-            UIManager.Instance.AddKey();
+            GameManager.Instance.IncreaseKey();
 
             Destroy(gameObject);
         }
